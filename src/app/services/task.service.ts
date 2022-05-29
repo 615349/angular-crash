@@ -7,9 +7,15 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class TaskService {
+  private baseUrl = 'http://localhost:5000/tasks';
   constructor(private http: HttpClient) { }
 
   getTasks(): Observable<Task[]> {
-    return this.http.get<Task[]>('http://localhost:5000/tasks');
+    return this.http.get<Task[]>(this.baseUrl);
+  }
+
+  deleteTask(task: Task): Observable<Task[]> {
+    const url = `${this.baseUrl}/${task.id}`;
+    return this.http.delete<Task[]>(url);
   }
 }
